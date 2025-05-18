@@ -49,17 +49,29 @@ class Classroom{
             numberofStudents++;
         }
     }
+
+    int userInput;
+    int correctdays;
+
+    void editattendence(){
+            System.out.println("enter the number of student you want to edit 0-2");
+            userInput=sc.nextInt();
+            
+            System.out.println("enter new days");
+            correctdays = sc.nextInt();
+            try{ 
+                studentdaysarr[userInput] = correctdays;
+            }
+            catch (Exception e) {
+                System.out.println("invalid number");
+            }    
+        
+    }
     public static void main(String[] args){
         Classroom obj = new Classroom();
 
         obj.addnewstudent();
-        
-        try{
-            obj.studentdaysarr[1] = 16;
-        }
-        catch(Exception e){
-            System.out.println("invalid id number");
-        }    
+        obj.editattendence();
         
         Student gt = new Student(obj.studentidarr[0],obj.studentnamearr[0],obj.studentdaysarr[0]);
         Student gt1 = new Student(obj.studentidarr[1],obj.studentnamearr[1],obj.studentdaysarr[1]);
