@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 class Student{
     private int studentid;
@@ -14,11 +14,24 @@ class Student{
     public int getStudentid(){
         return studentid;
     }
+    public void setstudentid(int studentid){
+        this.studentid = studentid;
+    }
     public String getName(){
         return name;
     }
+    public void setname(String name){
+        this.name= name;
+    }
     public int getDaysattended(){
         return daysattended;
+    }
+    public void setdaysattended(int daysattended){
+        this.daysattended = daysattended;
+    }
+
+     public void display() {
+        System.out.println(studentid + "\t" + name + "\t" + daysattended);
     }
 
 }
@@ -27,9 +40,9 @@ class Classroom{
 
     Scanner sc = new Scanner(System.in);
 
-    int[] studentidarr = new int[10];
-    String[] studentnamearr = new String[10];
-    int[] studentdaysarr = new int[10];
+    static ArrayList<Integer> studentidarr = new ArrayList<>(10);
+    static ArrayList<String> studentnamearr = new ArrayList<>(10);
+    static ArrayList<Integer> studentdaysarr = new ArrayList<>(10);
 
     int numberofStudents = 0;
 
@@ -37,14 +50,14 @@ class Classroom{
         for(int i =0 ; i<3 ;i++){
             System.out.println("-------add new Student--------");
             System.out.println("enter student id");
-            studentidarr[i] = sc.nextInt();
+            studentidarr.add(sc.nextInt());
             
             sc.nextLine();
             System.out.println("enter student name");
-            studentnamearr[i] = sc.nextLine();
+            studentnamearr.add(sc.nextLine());
 
             System.out.println("enter student days of attend");
-            studentdaysarr[i] = sc.nextInt();
+            studentdaysarr.add(sc.nextInt());
 
             numberofStudents++;
         }
@@ -54,28 +67,39 @@ class Classroom{
     int correctdays;
 
     void editattendence(){
-            System.out.println("enter the number of student you want to edit 0-2");
+            System.out.println("enter the id of student you want to edit");
             userInput=sc.nextInt();
-            
-            System.out.println("enter new days");
-            correctdays = sc.nextInt();
-            try{ 
-                studentdaysarr[userInput] = correctdays;
+          
+            if(userInput == 101){
+                System.out.println("enter new days");
+                correctdays = sc.nextInt();
+                studentdaysarr.set(0,correctdays);
             }
-            catch (Exception e) {
-                System.out.println("invalid number");
+            else if(userInput == 102){
+                System.out.println("enter new days");
+                correctdays = sc.nextInt();
+                studentdaysarr.set(1,correctdays);
+            }
+            else if(userInput == 103){
+                System.out.println("enter new days");
+                correctdays = sc.nextInt();
+                studentdaysarr.set(2,correctdays);
+            }      
+            else{
+                System.out.println("invalid Id");
             }    
         
     }
+    
     public static void main(String[] args){
         Classroom obj = new Classroom();
 
         obj.addnewstudent();
         obj.editattendence();
         
-        Student gt = new Student(obj.studentidarr[0],obj.studentnamearr[0],obj.studentdaysarr[0]);
-        Student gt1 = new Student(obj.studentidarr[1],obj.studentnamearr[1],obj.studentdaysarr[1]);
-        Student gt2 = new Student(obj.studentidarr[2],obj.studentnamearr[2],obj.studentdaysarr[2]);
+        Student gt = new Student(studentidarr.get(0),studentnamearr.get(0),studentdaysarr.get(0));
+        Student gt1 = new Student(studentidarr.get(1),studentnamearr.get(1),studentdaysarr.get(1));
+        Student gt2 = new Student(studentidarr.get(2),studentnamearr.get(2),studentdaysarr.get(2));
 
         System.out.println("####### Table of attendence ########");
         System.out.println("id\t name\t attend days");
