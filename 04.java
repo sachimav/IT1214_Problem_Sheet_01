@@ -9,9 +9,11 @@ class Movie{
     int[] ticketNumberarry = new int[10];
     String[] customerarry = new String[10];
 
+    
+    static Scanner sc = new Scanner(System.in);
+
     void booking(){
 
-        Scanner sc = new Scanner(System.in);
         int choose;
 
         do{
@@ -36,7 +38,8 @@ class Movie{
             System.out.println("do you want book another seat yes-0 || no-1");
             choose = sc.nextInt();
 
-            if(choose != 1){
+            if(choose != 1 && choose != 0){
+                System.out.println("Invalid choose");
                 break;
             }
         }
@@ -45,7 +48,7 @@ class Movie{
     }
 
     void cancel() {
-        Scanner sc = new Scanner(System.in);
+        
         System.out.print("Enter seat number to cancel (0–9): ");
         int seatNumber = sc.nextInt();
 
@@ -73,7 +76,7 @@ class Movie{
 
     public static void main(String[] args){
         
-        Scanner sc = new Scanner(System.in);
+        
         Movie obj = new Movie();
 
         int choice;
