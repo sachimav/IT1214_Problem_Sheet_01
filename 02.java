@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 
 class Vehical{
 	private String licenseplate;
@@ -32,86 +32,56 @@ class Vehical{
 
 }
 
-class Parkinglot{
 
-    Scanner sc = new Scanner(System.in);
+class ParkingLot {
+    Vehical[] vehicles = new Vehical[5];
+    int count = 0;
 
-    static String[] licenarr = new String[5];
-    static String[] ownerarr = new String[5];
-    static int[] hoursearr = new int[5];
-
-    static int vehicalcount = 0;
-
-    void parkvehical(){
-
-       int choices; 
-
-       do{
-
-        if (vehicalcount >= 5) {
-                System.out.println("Parking lot full.");
-                break;
-            }
-            System.out.println("enter new vehical");
-            System.out.println("enter vehical licenplate");
-            licenarr[vehicalcount] = sc.nextLine();
-
-            System.out.println("enter ownername");
-            ownerarr[vehicalcount] = sc.nextLine();
-
-        
-            System.out.println("enter hourse parked");
-            hoursearr[vehicalcount] = sc.nextInt();
-
-            vehicalcount++;
-
-            System.out.println("do yoy wnt to add another vehicals yes-0 || no-1");
-            choices = sc.nextInt();
-
-            sc.nextLine();
-
-        }while(choices == 0);   
-
+    public void parkVehicle(Vehical v) {
+        if (count < 5) {
+            vehicles[count] = v;
+            count++;
+        } else {
+            System.out.println("Parking lot is full.");
+        }
     }
 
-    void removevehi(){
-
-        int Userinput;
-        int choice;
-
-        do{
-            System.out.println("enter vehical number to remove 0-4");
-            choice = sc.nextInt();
-
-            if (choice >= 0 && choice < 5) {
-                licenarr[choice] = null;
-                ownerarr[choice] = null;
-                hoursearr[choice] = 0;
-
-                System.out.println("Vehicle removed.");
-            } else {
-                System.out.println("Invalid index.");
+    public void removeVehicle(String licensePlate) {
+        for (int i = 0; i < count; i++) {
+            if (vehicles[i].getLicenseplate().equals(licensePlate)) {
+                for (int j = i; j < count - 1; j++) {
+                    vehicles[j] = vehicles[j + 1];
+                }
+                vehicles[count - 1] = null;
+                count--;
+                System.out.println("Vehicle with license " + licensePlate + " removed.");
+                return;
             }
-
-            System.out.println("do you want to remove more vihicals 0-yes || 1-no");
-            Userinput = sc.nextInt();
-
         }
-        while(Userinput == 0);
+        System.out.println("Vehicle not found.");
     }
-    public static void main(String[] args){
 
-        Parkinglot obj = new Parkinglot();
-
-        obj.parkvehical();
-        obj.removevehi();
-        
-        System.out.println("\nLicense\t\tOwner\t\tHours Parked");
-        for (int i = 0; i < 5; i++) {
-            if (licenarr[i] != null) {
-                Vehical v = new Vehical(licenarr[i], ownerarr[i], hoursearr[i]);
-                System.out.println(v.getLicenseplate() + "\t" + v.getOwnerName() + "\t\t" + v.getHourseParked());
+    public void displayVehicles() {
+        if (count == 0) {
+            System.out.println("No vehicles parked.");
+        } else {
+            System.out.println("license\t owner\t hours");
+            for (int i = 0; i < count; i++) {
+                System.out.println(vehicles[i].getLicenseplate()+"\t "+ vehicles[i].getOwnerName() +"\t "+ vehicles[i].getHourseParked());
             }
         }
+    }
+
+    public static void main(String[] args) {
+        
+        ParkingLot lot = new ParkingLot();
+
+        lot.parkVehicle(new Vehical("ABC123", "John Doe", 2));
+        lot.parkVehicle(new Vehical("XYZ789", "Jane Smith", 4));
+        lot.parkVehicle(new Vehical("LMN456", "Bob Brown", 1));
+
+        lot.removeVehicle("XYZ789");
+
+        lot.displayVehicles();
     }    
 }
